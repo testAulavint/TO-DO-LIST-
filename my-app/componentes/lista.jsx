@@ -3,11 +3,11 @@ import BtnBase from "./btn";
 
 const Tarefa = ({ tarefa, hendleSubmit }) => {
   const hookTarefa = useTarefa();
-  console.log('formulario renderizado');
-  
+  console.log("formulario renderizado");
+
   return (
     <>
-      <form >
+      <form>
         <h1>TO-DO LIST</h1>
         <input
           type="text"
@@ -15,7 +15,8 @@ const Tarefa = ({ tarefa, hendleSubmit }) => {
           placeholder="Adicionar tarefa"
           onChange={hookTarefa.onChange}
         />
-        <BtnBase onClick={hendleSubmit}  text={'Adicionar'}/>
+        <BtnBase onClick={hendleSubmit} text={"Adicionar"} />
+        
       </form>
     </>
   );
