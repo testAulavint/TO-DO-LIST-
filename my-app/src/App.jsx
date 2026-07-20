@@ -1,51 +1,54 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Tarefa from "../componentes/lista";
 import MostrarTela from "../componentes/listarTela";
 import { userContext } from "./contex/userContext";
-import { useMemo } from "react";
-
 import "./App.css";
 
+const filtros = [
+  { valor: "todas", nome: "Todas" },
+  { valor: "concluidas", nome: "Concluídas" },
+  { valor: "pendentes", nome: "Pendentes" },
+];
+
 function App() {
+  //ONDE FICANM ARMAZENADAS AS TAREFAS CRIADAS
   const [arrayTarefas, setArrayTarefas] = useState([]);
 
-  const [filtros, setFiltros] = useState([
-    { id: 1, nome: "Selecionar Filtro", role: false },
-    { id: 2, nome: "Todas", role: false },
-    { id: 3, nome: "Concluídas", role: false },
-    { id: 4, nome: "Pendêntes", role: false },
-  ]);
+  //O VALOR É ARMAZENADO AQUI DO FILTRO (PEGA O VALOR DE FILTROS)
+  const [valorFiltro, setValorFiltro] = useState("todas");
 
   const [tarefa, setTarefa] = useState("");
-  console.log(filtros);
-  const inverterrole = (id) => {
-    setFiltros((prev) =>
-      prev.map((e) => {
-        if (e.id === id) {
-          return {
-            ...e,
-            role: !e.role,
-          };
-        }
-        return e;
-      }),
+
+  //ALTERA O CONCLUIDO DAS TAREFAS NO INPUT AO CLICAR NO CHECKBOX
+  const alternarConclusao = (id) => {
+    setArrayTarefas((tarefas) =>
+      tarefas.map((item) =>
+        item.id === id ? { ...item, concluida: !item.concluida } : item,
+      ),
     );
   };
 
+  //o .MAP QUE VAI SER USADO PARA MOSTAR AS TAREFAS NO JANELA COM OS FILTROS ATUALIZADOS DA VARIAVEL (VALORFILTRO)
+  const tarefasFiltradas = arrayTarefas.filter((item) => {
+    if (valorFiltro === "concluidas") return item.concluida;
+    if (valorFiltro === "pendentes") return !item.concluida;
+    return true;
+  });
+
   const hendleSubmit = (e) => {
-    event.preventDefault();
+    e.preventDefault();
+
+    if (!tarefa.trim()) return;
 
     const novaTarefa = {
       id: Date.now(),
-      nome: tarefa,
+      nome: tarefa.trim(),
+      concluida: false,
     };
 
     //  console.log("Formulário enviado");
 
-    setArrayTarefas([...arrayTarefas, novaTarefa]); //peguei o array existente e adicionei
-
-    // console.log(arrayTarefas);
-
+    setArrayTarefas((tarefas) => [...tarefas, novaTarefa]);
     setTarefa("");
   };
 
@@ -56,18 +59,25 @@ function App() {
           <main className="">
             <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
             {/* mostrar tarefas em tela */}
-            {arrayTarefas.map((e) => (
-              <MostrarTela key={e.id} elemento={e.nome} id={e.id} />
+            {tarefasFiltradas.map((e) => (
+              <MostrarTela
+                key={e.id}
+                tarefa={e.concluida}
+                elemento={e.nome}
+                id={e.id}
+                funcao={alternarConclusao}
+              />
             ))}
 
             {/* filtro */}
             <select
               name="filtro"
               id="filtro"
-              onChange={(e) => inverterrole(Number(e.target.value))}
+              value={valorFiltro}
+              onChange={(e) => setValorFiltro(e.target.value)}
             >
               {filtros.map((item) => (
-                <option key={item.id} value={item.id}>
+                <option key={item.valor} value={item.valor}>
                   {item.nome}
                 </option>
               ))}
