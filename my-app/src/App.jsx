@@ -12,6 +12,19 @@ const filtros = [
 ];
 
 function App() {
+  const [emailDigitado, setEmailDigitado] = useState("");
+  const [salvo, setSalvo] = useState("");
+
+  const loginConfirm = (e) => {
+    e.preventDefault();
+    setEmailDigitado(emailDigitado);
+
+    localStorage.setItem("email", emailDigitado);
+
+    setSalvo(localStorage.getItem("email"));
+  };
+
+  const email = localStorage.getItem("email");
   //ONDE FICANM ARMAZENADAS AS TAREFAS CRIADAS
   const [arrayTarefas, setArrayTarefas] = useState([]);
 
@@ -56,39 +69,46 @@ function App() {
   return (
     <>
       {" "}
-      <Login />
-      <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
-        <div className="hidden">
-          <main className="hidden">
-            <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
-            {/* mostrar tarefas em tela */}
-            {tarefasFiltradas.map((e) => (
-              <MostrarTela
-                key={e.id}
-                tarefa={e.concluida}
-                elemento={e.nome}
-                id={e.id}
-                funcao={alternarConclusao}
-              />
-            ))}
-
-            {/* filtro */}
-            <select
-              className=""
-              name="filtro"
-              id="filtro"
-              value={valorFiltro}
-              onChange={(e) => setValorFiltro(e.target.value)}
-            >
-              {filtros.map((item) => (
-                <option key={item.valor} value={item.valor}>
-                  {item.nome}
-                </option>
+      {email ? (
+        <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
+          <div className="">
+            <main className="">
+              <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
+              {/* mostrar tarefas em tela */}
+              {tarefasFiltradas.map((e) => (
+                <MostrarTela
+                  key={e.id}
+                  tarefa={e.concluida}
+                  elemento={e.nome}
+                  id={e.id}
+                  funcao={alternarConclusao}
+                />
               ))}
-            </select>
-          </main>
-        </div>
-      </userContext.Provider>
+
+              {/* filtro */}
+              <select
+                className=""
+                name="filtro"
+                id="filtro"
+                value={valorFiltro}
+                onChange={(e) => setValorFiltro(e.target.value)}
+              >
+                {filtros.map((item) => (
+                  <option key={item.valor} value={item.valor}>
+                    {item.nome}
+                  </option>
+                ))}
+              </select>
+            </main>
+          </div>
+        </userContext.Provider>
+      ) : (
+        <Login
+          hendleSubmit={loginConfirm}
+          setEmailDigitado={setEmailDigitado}
+          emailDigitado={emailDigitado}
+        />
+      )}
     </>
   );
 }

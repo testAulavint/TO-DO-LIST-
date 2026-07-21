@@ -3,12 +3,12 @@ import Google from "../src/assets/google.svg";
 import Facebook from "../src/assets/facebook.svg";
 import Apple from "../src/assets/apple.svg";
 import Microsoft from "../src/assets/microsoft.svg";
-import Paisagem from "../src/assets/paisagem.jpg"
+import Paisagem from "../src/assets/paisagem.jpg";
+import { useState } from "react";
 
-function Login() {
+function Login({ hendleSubmit, emailDigitado, setEmailDigitado }) {
   return (
     <div className=" loginText h-full flex flex-col justify-center items-center  ">
-        
       <div className="LoginPrincipal h-3/4 w-1/2 max-w-[500px] rounded-2xl grid grid-rows-[auto_auto_1fr_auto] gap-4 p-9 ">
         <div className="">
           <h2 className="text-center  grid h-fit">Crie suas Tarefas</h2>
@@ -41,16 +41,18 @@ function Login() {
             <p className="text-center"> ou </p>
           </div>
           <div className="ResizeText flex flex-col">
-            <input 
+            <input
               className="border rounded-2xl p-1 pl-3 "
               placeholder="Inserir E-mail"
               type="text"
+              value={emailDigitado}
+              onChange={(event) => setEmailDigitado(event.target.value)}
             />
             <div className=" flex flex-col gap-2 mt-2">
               <div>
                 <input className="mr-4" type="checkbox" id="it1" />{" "}
                 <label htmlFor="it1 " className="">
-                Concordo em receber atualizações
+                  Concordo em receber atualizações
                 </label>
               </div>
 
@@ -66,7 +68,11 @@ function Login() {
         </div>
 
         <div>
-          <button className="bg-green-300 w-full h-10 rounded-2xl ">
+          <button
+            onClick={hendleSubmit}
+            type="submit"
+            className="bg-green-300 w-full h-10 rounded-2xl cursor-pointer"
+          >
             Crie Grátis
           </button>
         </div>
