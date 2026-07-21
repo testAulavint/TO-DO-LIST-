@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Tarefa from "../componentes/lista";
 import MostrarTela from "../componentes/listarTela";
+import Login from "../componentes/login.jsx";
 import { userContext } from "./contex/userContext";
 import "./App.css";
 
@@ -54,9 +55,11 @@ function App() {
 
   return (
     <>
+      {" "}
+      <Login />
       <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
-        <div className="">
-          <main className="">
+        <div className="hidden">
+          <main className="hidden">
             <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
             {/* mostrar tarefas em tela */}
             {tarefasFiltradas.map((e) => (
@@ -71,6 +74,7 @@ function App() {
 
             {/* filtro */}
             <select
+              className=""
               name="filtro"
               id="filtro"
               value={valorFiltro}
