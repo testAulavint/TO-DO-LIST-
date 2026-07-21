@@ -6,7 +6,13 @@ import Microsoft from "../src/assets/microsoft.svg";
 import Paisagem from "../src/assets/paisagem.jpg";
 import { useState } from "react";
 
-function Login({ hendleSubmit, emailDigitado, setEmailDigitado }) {
+function Login({
+  hendleSubmit,
+  emailDigitado,
+  setEmailDigitado,
+  Valido,
+  inverter,
+}) {
   return (
     <div className=" loginText h-full flex flex-col justify-center items-center  ">
       <div className="LoginPrincipal h-3/4 w-1/2 max-w-[500px] rounded-2xl grid grid-rows-[auto_auto_1fr_auto] gap-4 p-9 ">
@@ -15,7 +21,9 @@ function Login({ hendleSubmit, emailDigitado, setEmailDigitado }) {
         </div>
 
         <div>
-          <p>Cadastre-se usando sua conta de mídia social</p>
+          <p className="text-center">
+            Cadastre-se usando sua conta de mídia social
+          </p>
         </div>
 
         <div className="grid min-h-0 grid-rows-[auto_auto_1fr] gap-10 mt-10">
@@ -42,23 +50,29 @@ function Login({ hendleSubmit, emailDigitado, setEmailDigitado }) {
           </div>
           <div className="ResizeText flex flex-col">
             <input
-              className="border rounded-2xl p-1 pl-3 "
+              className="border rounded-2xl p-3 pl-3 "
               placeholder="Inserir E-mail"
               type="text"
               value={emailDigitado}
               onChange={(event) => setEmailDigitado(event.target.value)}
             />
-            <div className=" flex flex-col gap-2 mt-2">
+            <div className="text-gray-600 flex flex-col gap-2 mt-5">
               <div>
-                <input className="mr-4" type="checkbox" id="it1" />{" "}
-                <label htmlFor="it1 " className="">
+                <input
+                  className="mr-1"
+                  type="checkbox"
+                  id="item4"
+                  checked={Valido}
+                  onChange={(e) => inverter(e.target.value)}
+                />{" "}
+                <label htmlFor="item4" className="">
                   Concordo em receber atualizações
                 </label>
               </div>
 
               <div>
                 {" "}
-                <input type="checkbox" id="it2" className="mr-4 " />
+                <input type="checkbox" id="it2" className="mr-2 " />
                 <label htmlFor="it2">
                   Quero receber materiais de treinamento
                 </label>

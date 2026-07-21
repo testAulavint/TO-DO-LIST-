@@ -12,19 +12,36 @@ const filtros = [
 ];
 
 function App() {
+  //PARA VALIDAR O CHECK BOX DO LOGIN
+  const [Valido, setValido] = useState(false);
+
+  //PARA CAPITAR O EMAIL DIGITADO NO INPUT DE LOGIN
   const [emailDigitado, setEmailDigitado] = useState("");
+  // PARA PEGAR O EMAIL SALVO NO LOCALSTORAGE E FAZER EM GETITEM
   const [salvo, setSalvo] = useState("");
 
+  //PARA INVERTER O CAIXA DE CHECKBOX
+  const inverter = () => {
+    setValido((prev) => !prev);
+  };
+
+  //FUNÇÃO QUE VERICA O SUBMIT DO LOGIN PARA VER SE AS INFORMAÇÕES ESTÃO DE ACORDO
   const loginConfirm = (e) => {
     e.preventDefault();
     setEmailDigitado(emailDigitado);
+
+    if (!Valido) {
+      return alert("Concorde com os termos para prosseguir");
+    }
 
     localStorage.setItem("email", emailDigitado);
 
     setSalvo(localStorage.getItem("email"));
   };
 
+  //VERIFICAÇÃO PARA VER SE JÁ TEM UM EMAIL SALVO NO LOCALSTORAGE
   const email = localStorage.getItem("email");
+
   //ONDE FICANM ARMAZENADAS AS TAREFAS CRIADAS
   const [arrayTarefas, setArrayTarefas] = useState([]);
 
@@ -107,6 +124,8 @@ function App() {
           hendleSubmit={loginConfirm}
           setEmailDigitado={setEmailDigitado}
           emailDigitado={emailDigitado}
+          Valido={Valido}
+          inverter={inverter}
         />
       )}
     </>
