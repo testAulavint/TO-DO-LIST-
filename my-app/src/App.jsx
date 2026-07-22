@@ -4,6 +4,8 @@ import MostrarTela from "../componentes/listarTela";
 import Login from "../componentes/login.jsx";
 import { userContext } from "./contex/userContext";
 import "./App.css";
+import Header from "../componentes/header.jsx";
+import GridPrincipal from "../componentes/gridPrincipal";
 
 const filtros = [
   { valor: "todas", nome: "Todas" },
@@ -90,6 +92,8 @@ function App() {
         <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
           <div className="">
             <main className="">
+              <Header />
+              <GridPrincipal />
               <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
               {/* mostrar tarefas em tela */}
               {tarefasFiltradas.map((e) => (
