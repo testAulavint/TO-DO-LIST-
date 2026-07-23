@@ -10,13 +10,21 @@ const Tarefa = ({ tarefa, hendleSubmit, getForm }) => {
       <div onClick={getForm} className=" fixed inset-0 w-screen h-dvh">
         {" "}
       </div>
-      <div className="w-2/3 mx-auto absolute top-[50%] left-[50%]  -translate-x-1/2 -translate-y-1/2">
-        <form className="w-full border grid grid-cols-[1fr_auto] p-5 gap-7 z-20">
+      <div className=" h-full w-full   ">
+        <form className="absolute top-[50%] left-[50%] h-60  max-w-[400px]     -translate-x-1/2 -translate-y-1/2 w-3/4 mx-auto border flex flex-col justify-between p-5 gap-7 z-20">
           <input
             className="border p-2"
             type="text"
             value={tarefa}
-            placeholder="Adicionar tarefa"
+            placeholder="Titulo da tarefa"
+            onChange={hookTarefa.onChange}
+          />
+
+          <textarea
+            className="border p-2"
+            type="text"
+            value={tarefa}
+            placeholder="Descrição"
             onChange={hookTarefa.onChange}
           />
           <BtnBase onClick={hendleSubmit} text={"Adicionar"} />

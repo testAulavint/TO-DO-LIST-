@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import Tarefa from "../componentes/lista";
 import MostrarTela from "../componentes/listarTela";
 import Login from "../componentes/login.jsx";
@@ -18,14 +18,26 @@ function App() {
     setAtivarForm((prev) => !prev);
   };
 
+  const tarefasGet = () => {
+    setAtivarLista((prev) => !prev);
+
+    console.log("passei por aqui");
+  };
+  //pára ativar a lista das tarefas
+  const [ativarLista, setAtivarLista] = useState(false);
+
+  //para ativar o formulariov tarefa
   const [ativarForm, setAtivarForm] = useState(false);
 
   //PARA VALIDAR O CHECK BOX DO LOGIN
   const [Valido, setValido] = useState(false);
 
   //PARA CAPITAR O EMAIL DIGITADO NO INPUT DE LOGIN
-  const [emailDigitado, setEmailDigitado] = useState("");
+  const [usuarioDigitado, setUsuarioDigitado] = useState();
   // PARA PEGAR O EMAIL SALVO NO LOCALSTORAGE E FAZER EM GETITEM
+  const [email, setEmail] = useState("");
+  const [nome, setNome] = useState("");
+
   const [salvo, setSalvo] = useState("");
 
   //PARA INVERTER O CAIXA DE CHECKBOX
@@ -36,20 +48,30 @@ function App() {
   //FUNÇÃO QUE VERICA O SUBMIT DO LOGIN PARA VER SE AS INFORMAÇÕES ESTÃO DE ACORDO
   const loginConfirm = (e) => {
     e.preventDefault();
-    setEmailDigitado(emailDigitado);
 
-    if (!Valido) {
-      return alert("Concorde com os termos para prosseguir");
+    if (!nome || !email) {
+      return alert("Preencher todos os campos");
     }
+if(!Valido){
+  return alert("Concorde com os termos para prosseguir")
+}
+    const usuario = {
+      nome: nome,
+      email: email,
+    };
 
-    localStorage.setItem("email", emailDigitado);
+    setUsuarioDigitado(usuario);
 
-    setSalvo(localStorage.getItem("email"));
+    const string = JSON.stringify(usuario);
+
+    localStorage.setItem("user", string);
+
+    setSalvo(localStorage.getItem("user"));
+    console.log(string);
   };
 
-  //VERIFICAÇÃO PARA VER SE JÁ TEM UM EMAIL SALVO NO LOCALSTORAGE
-  const email = localStorage.getItem("email");
-
+  //VERIFICAÇÃO PARA VER SE JÁ TEM UM usuario SALVO NO LOCALSTORAGE
+  const ponte = localStorage.getItem("user");
   //ONDE FICANM ARMAZENADAS AS TAREFAS CRIADAS
   const [arrayTarefas, setArrayTarefas] = useState([]);
 
@@ -94,12 +116,12 @@ function App() {
   return (
     <>
       {" "}
-      {email ? (
+      {ponte ? (
         <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
           <div className="w-full">
             <main className="w-full">
-              <Header setAtivarForm={formGet} />
-              <GridPrincipal />
+              <Header setAtivarForm={formGet} setAtivarLista={tarefasGet} />
+
               {ativarForm && (
                 <Tarefa
                   tarefa={tarefa}
@@ -108,15 +130,17 @@ function App() {
                 />
               )}
               {/* mostrar tarefas em tela */}
-              {tarefasFiltradas.map((e) => (
-                <MostrarTela
-                  key={e.id}
-                  tarefa={e.concluida}
-                  elemento={e.nome}
-                  id={e.id}
-                  funcao={alternarConclusao}
-                />
-              ))}
+
+              {ativarLista &&
+                tarefasFiltradas.map((e) => (
+                  <MostrarTela
+                    key={e.id}
+                    tarefa={e.concluida}
+                    elemento={e.nome}
+                    id={e.id}
+                    funcao={alternarConclusao}
+                  />
+                ))}
 
               {/* filtro */}
               <select
@@ -138,10 +162,12 @@ function App() {
       ) : (
         <Login
           hendleSubmit={loginConfirm}
-          setEmailDigitado={setEmailDigitado}
-          emailDigitado={emailDigitado}
+          setEmail={setEmail}
+          email={email}
           Valido={Valido}
           inverter={inverter}
+          nome={nome}
+          setNome={setNome}
         />
       )}
     </>

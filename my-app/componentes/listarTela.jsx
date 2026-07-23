@@ -12,7 +12,7 @@ const MostrarTela = ({ elemento, id, tarefa, funcao }) => {
           checked={tarefa}
           onChange={() => funcao(id)}
         />
-        <label htmlFor={`item-${id}`}>{elemento} </label>
+        <label className="text-amber-900" htmlFor={`item-${id}`}>{elemento} </label>
         <BtnBase text={"Deletar"} onClick={() => hookTarefa.onCLickDel(id)} />
       </li>
     </ul>

@@ -8,10 +8,12 @@ import { useState } from "react";
 
 function Login({
   hendleSubmit,
-  emailDigitado,
-  setEmailDigitado,
+  email,
+  setEmail,
   Valido,
   inverter,
+  setNome,
+  nome,
 }) {
   return (
     <div className=" loginText h-full flex flex-col justify-center items-center  ">
@@ -48,13 +50,20 @@ function Login({
           <div>
             <p className="text-center"> ou </p>
           </div>
-          <div className="ResizeText flex flex-col">
+          <div className="ResizeText flex flex-col gap-5">
+            <input
+              className="border rounded-2xl p-3 pl-3"
+              type="text"
+              placeholder="Inserir Nome"
+              value={nome}
+              onChange={(event) => setNome(event.target.value)}
+            />
             <input
               className="border rounded-2xl p-3 pl-3 "
               placeholder="Inserir E-mail"
               type="text"
-              value={emailDigitado}
-              onChange={(event) => setEmailDigitado(event.target.value)}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <div className="text-gray-600 flex flex-col gap-2 mt-5">
               <div>
@@ -66,7 +75,7 @@ function Login({
                   onChange={(e) => inverter(e.target.value)}
                 />{" "}
                 <label htmlFor="item4" className="">
-                  Concordo em receber atualizações
+                  Concordo em com os termos
                 </label>
               </div>
 
