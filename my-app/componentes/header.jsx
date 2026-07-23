@@ -1,7 +1,12 @@
 import Profile from "../src/assets/profile.png";
 import Plus from "../src/assets/plus.svg";
 import Lista from "../src/assets/lista.png";
-function Header() {
+import { useState } from "react";
+function Header({setAtivarForm}) {
+  
+
+  
+
   return (
     <>
       <header className="h-[75px] fixed bottom-0 w-full bg-amber-700 content-center ">
@@ -19,6 +24,7 @@ function Header() {
                 className="transition-transform duration-300 hover:scale-150"
                 src={Plus}
                 alt=""
+                onClick={setAtivarForm}
               />
             </li>
             <li>

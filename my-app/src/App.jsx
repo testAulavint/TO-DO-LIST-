@@ -14,6 +14,12 @@ const filtros = [
 ];
 
 function App() {
+  const formGet = () => {
+    setAtivarForm((prev) => !prev);
+  };
+
+  const [ativarForm, setAtivarForm] = useState(false);
+
   //PARA VALIDAR O CHECK BOX DO LOGIN
   const [Valido, setValido] = useState(false);
 
@@ -90,11 +96,17 @@ function App() {
       {" "}
       {email ? (
         <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
-          <div className="">
-            <main className="">
-              <Header />
+          <div className="w-full">
+            <main className="w-full">
+              <Header setAtivarForm={formGet} />
               <GridPrincipal />
-              <Tarefa tarefa={tarefa} hendleSubmit={hendleSubmit} />
+              {ativarForm && (
+                <Tarefa
+                  tarefa={tarefa}
+                  hendleSubmit={hendleSubmit}
+                  getForm={formGet}
+                />
+              )}
               {/* mostrar tarefas em tela */}
               {tarefasFiltradas.map((e) => (
                 <MostrarTela
