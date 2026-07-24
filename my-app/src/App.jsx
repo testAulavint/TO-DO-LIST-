@@ -119,10 +119,12 @@ function App() {
     <>
       {" "}
       {ponte ? (
-        <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
+        <userContext.Provider
+          value={{ setArrayTarefas, setTarefa }}
+        >
           <div className="w-full">
             <main className="w-full">
-              <h1>Olá, {usuarioPrimario?.nome} </h1>
+              <h1 className="text-center m-5">Olá, {usuarioPrimario?.nome} </h1>
               <Header setAtivarForm={formGet} setAtivarLista={tarefasGet} />
 
               {ativarForm && (
@@ -142,6 +144,7 @@ function App() {
                     elemento={e.nome}
                     id={e.id}
                     funcao={alternarConclusao}
+                    usuario={usuarioPrimario}
                   />
                 ))}
 
