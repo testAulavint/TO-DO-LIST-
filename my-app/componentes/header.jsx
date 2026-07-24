@@ -11,13 +11,6 @@ function Header({ setAtivarForm, setAtivarLista }) {
             <li>
               <img
                 className="transition-transform duration-300 hover:scale-150"
-                src={Profile}
-                alt=""
-              />
-            </li>
-            <li>
-              <img
-                className="transition-transform duration-300 hover:scale-150"
                 src={Plus}
                 alt=""
                 onClick={setAtivarForm}

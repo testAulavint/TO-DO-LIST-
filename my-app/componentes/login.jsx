@@ -17,7 +17,7 @@ function Login({
 }) {
   return (
     <div className=" loginText h-full flex flex-col justify-center items-center  ">
-      <div className="LoginPrincipal h-3/4 w-1/2 max-w-[500px] rounded-2xl grid grid-rows-[auto_auto_1fr_auto] gap-4 p-9 ">
+      <div className="LoginPrincipal h-[85%] w-1/2 w-[350px] rounded-2xl grid grid-rows-[auto_auto_1fr_auto] gap-4 p-9 ">
         <div className="">
           <h2 className="text-center  grid h-fit">Crie suas Tarefas</h2>
         </div>
@@ -65,7 +65,7 @@ function Login({
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <div className="text-gray-600 flex flex-col gap-2 mt-5">
+            <div className="text-gray-800 flex flex-col gap-2 mt-5">
               <div>
                 <input
                   className="mr-1"

@@ -32,8 +32,6 @@ function App() {
   //PARA VALIDAR O CHECK BOX DO LOGIN
   const [Valido, setValido] = useState(false);
 
-  //PARA CAPITAR O EMAIL DIGITADO NO INPUT DE LOGIN
-  const [usuarioDigitado, setUsuarioDigitado] = useState();
   // PARA PEGAR O EMAIL SALVO NO LOCALSTORAGE E FAZER EM GETITEM
   const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
@@ -52,26 +50,30 @@ function App() {
     if (!nome || !email) {
       return alert("Preencher todos os campos");
     }
-if(!Valido){
-  return alert("Concorde com os termos para prosseguir")
-}
+    if (!Valido) {
+      return alert("Concorde com os termos para prosseguir");
+    }
     const usuario = {
       nome: nome,
       email: email,
     };
 
-    setUsuarioDigitado(usuario);
-
     const string = JSON.stringify(usuario);
 
     localStorage.setItem("user", string);
 
-    setSalvo(localStorage.getItem("user"));
+    setSalvo(string);
+
     console.log(string);
   };
 
   //VERIFICAÇÃO PARA VER SE JÁ TEM UM usuario SALVO NO LOCALSTORAGE
   const ponte = localStorage.getItem("user");
+  const converterIn = JSON.parse(ponte);
+
+  const usuarioPrimario = converterIn;
+  console.log(usuarioPrimario);
+
   //ONDE FICANM ARMAZENADAS AS TAREFAS CRIADAS
   const [arrayTarefas, setArrayTarefas] = useState([]);
 
@@ -120,6 +122,7 @@ if(!Valido){
         <userContext.Provider value={{ setArrayTarefas, setTarefa }}>
           <div className="w-full">
             <main className="w-full">
+              <h1>Olá, {usuarioPrimario?.nome} </h1>
               <Header setAtivarForm={formGet} setAtivarLista={tarefasGet} />
 
               {ativarForm && (
